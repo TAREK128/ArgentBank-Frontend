@@ -1,0 +1,33 @@
+.main.bg-dark {
+  background-color: #12002b;
+  min-height: calc(100vh - 50px);
+  padding: 2rem;
+  color: white;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.edit-button {
+  border: none;
+  padding: 0.5rem 1rem;
+  background-color: #00bc77;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.account {
+  background-color: white;
+  color: black;
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+.transaction-button {
+  border: 1px solid #00bc77;
+  background-color: white;
+  color: #00bc77;
+  padding: 0.5rem;
+  cursor: pointer;
+}
