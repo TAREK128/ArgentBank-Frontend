@@ -3,12 +3,38 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:3001/api/v1/user' // تحديد الرابط
 
+// حفظ بيانات المستخدم
+const storedToken = localStorage.getItem('token')
+const storedUser = localStorage.getItem('user')
+  ? JSON.parse(localStorage.getItem('user'))
+  : null
+
 // لتسجيل الدخول
 export const loginUser = createAsyncThunk( // يقوم بإرسال بيانات المستخدم (email, password) إلى رابط تسجيل الدخول
   'auth/loginUser',
   async (userCredentials, thunkAPI) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, userCredentials)
+      const response = await axios.post(`${API_URL}/login`, userCredentials) // ارسال الطلب الى api
+      return response.data.body // اعد النتيجة اذا نجح الطلب
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message)
+    }
+  }
+)
+// جلب بيانات البروفايل
+export const getUserProfile = createAsyncThunk(
+  'auth/getUserProfile',
+  async (token, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/profile`,
+        {},
+        {
+          headers: { //  يخبر الـ API أن الطلب من مستخدم مسجّل الدخول
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       return response.data.body
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.message)

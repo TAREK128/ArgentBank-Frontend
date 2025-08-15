@@ -1,33 +1,89 @@
-.main.bg-dark {
-  background-color: #12002b;
-  min-height: calc(100vh - 50px);
+.profile-page {
+  max-width: 1000px; /* زدت العرض الأقصى */
+  margin: 0 auto;
   padding: 2rem;
-  color: white;
 }
+
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  text-align: center;
   margin-bottom: 2rem;
 }
-.edit-button {
+
+.input-group {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-group label {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.input-group input {
+  padding: 0.4rem;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-group {
+  margin-top: 1rem;
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 0.6rem 1.2rem;
+  margin: 0 0.5rem;
   border: none;
-  padding: 0.5rem 1rem;
-  background-color: #00bc77;
-  color: white;
+  border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
 }
-.account {
-  background-color: white;
-  color: black;
-  margin-bottom: 2rem;
-  padding: 1rem;
+
+.save-btn {
+  background-color: #4caf50;
+  color: white;
 }
-.transaction-button {
-  border: 1px solid #00bc77;
-  background-color: white;
-  color: #00bc77;
-  padding: 0.5rem;
+
+.cancel-btn {
+  background-color: #6bbf73;
+  color: white;
+}
+
+.accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.account-card {
+  background-color: #2c2c2c;
+  color: white;
+  padding: 1.5rem 2rem; /* زدت الحشوة */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+  width: 100%; /* البطاقة تأخذ كل عرض الحاوية */
+  box-sizing: border-box;
+}
+
+.amount {
+  font-size: 1.8rem; /* أكبر قليلاً */
+  font-weight: bold;
+}
+
+.balance {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.arrow-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: white;
   cursor: pointer;
 }
