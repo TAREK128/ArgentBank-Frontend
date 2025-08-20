@@ -41,6 +41,28 @@ export const getUserProfile = createAsyncThunk(
     }
   }
 )
+
+// تغير الاسم 
+export const updateUserProfile = createAsyncThunk(
+  'auth/updateProfile',
+  async ({ firstName, lastName, token }, thunkAPI) => { // ⬅️ غير إلى firstName و lastName
+    try {
+      const response = await axios.put(
+        `${API_URL}/profile`,
+        { firstName, lastName }, // ⬅️ أرسل firstName و lastName فقط
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data.body;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 // الحالة الاولى
 const authSlice = createSlice({ //  هذا يُنشئ "شريحة" جديدة 
   name: 'auth', // اسم الشريحه
@@ -72,6 +94,7 @@ const authSlice = createSlice({ //  هذا يُنشئ "شريحة" جديدة
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false // توقف التحميل
         state.token = action.payload.token // نحفظ التوكن الذي رجع من الـ API
+        state.user = action.payload.user
       })
 
       // إذا فشل تسجيل الدخول 
@@ -79,6 +102,32 @@ const authSlice = createSlice({ //  هذا يُنشئ "شريحة" جديدة
         state.loading = false // توقف التحميل
         state.error = action.payload // نحفظ رسالة الخطأ لعرضها على المستخدم
       })
+ 
+      .addCase(getUserProfile.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.loading = false
+        state.user = action.payload // 🔹 هنا نخزن بيانات المستخدم
+      })
+      .addCase(getUserProfile.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
+      // تغير الاسم
+.addCase(updateUserProfile.pending, (state) => {
+  state.loading = true;
+  state.error = null;
+})
+.addCase(updateUserProfile.fulfilled, (state, action) => {
+  state.loading = false;
+  state.user = action.payload; // تحديث بيانات المستخدم
+})
+.addCase(updateUserProfile.rejected, (state, action) => {
+  state.loading = false;
+  state.error = action.payload;
+});
   },
 })
 

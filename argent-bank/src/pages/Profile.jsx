@@ -1,52 +1,92 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUserProfile } from "../redux/features/authSlice";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import "../css/profile.css";
 
-export default function Profile() {
-  const [userName, setUserName] = useState("Ben_hg");
-  const [firstName] = useState("Ben");
-  const [lastName] = useState("Hong");
 
-  const handleSave = () => {
-    alert(`Username updated to: ${userName}`);
-    // هنا تضيف كود استدعاء API لتعديل الاسم
+function Profile() {
+  const dispatch = useDispatch();
+  const { user, token, loading } = useSelector((state) => state.auth);
+  
+const [firstName, setFirstName] = useState(user?.firstName || "");
+const [lastName, setLastName] = useState(user?.lastName || "");
+const [isEditing, setIsEditing] = useState(false);
+
+  const handleSave = async () => {
+    try {
+      await dispatch(updateUserProfile({ firstName, lastName, token })).unwrap();
+      setIsEditing(false);
+      alert("تم تحديث البيانات بنجاح!");
+    } catch (error) {
+      alert(`فشل التحديث: ${error}`);
+    }
   };
 
-  const handleCancel = () => {
-    setUserName("Ben_hg");
-  };
+ const handleCancel = () => {
+  setFirstName(user?.firstName || ""); // ⬅️ إعادة firstName
+  setLastName(user?.lastName || "");   // ⬅️ إعادة lastName
+  setIsEditing(false);
+};
+return (
+    <>
+      <Header />
+      
+      <main className="main bg-dark">
+        <div className="header">
+          <h1>Edit user info</h1>
+          
+        <div className="input-group">
+  <label>First name:</label>
+  <input
+    type="text"
+    value={firstName}
+    onChange={(e) => setFirstName(e.target.value)}
+    disabled={!isEditing}
+  />
+</div>
 
-  return (
-    <div className="profile-page">
-      <div className="header">
-        <h2>Edit user info</h2>
-        <div className="input-group">
-          <label>User name:</label>
-          <input
-            type="text"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-          />
-        </div>
-        <div className="input-group">
-          <label>First name:</label>
-          <input type="text" value={firstName} disabled />
-        </div>
-        <div className="input-group">
-          <label>Last name:</label>
-          <input type="text" value={lastName} disabled />
-        </div>
-        <div className="btn-group">
-          <button className="save-btn" onClick={handleSave}>
-            Save
-          </button>
-          <button className="cancel-btn" onClick={handleCancel}>
-            Cancel
-          </button>
-        </div>
-      </div>
+<div className="input-group">
+  <label>Last name:</label>
+  <input
+    type="text"
+    value={lastName}
+    onChange={(e) => setLastName(e.target.value)}
+    disabled={!isEditing}
+  />
+</div>
 
-      <section className="accounts">
-        <div className="account-card">
+          <div className="button-group">
+            {isEditing ? (
+              <>
+                <button 
+                  className="save-btn" 
+                  onClick={handleSave}
+                  disabled={loading}
+                >
+                  {loading ? "جاري الحفظ..." : "Save"}
+                </button>
+                <button className="cancel-btn" onClick={handleCancel}>
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <button 
+                className="edit-btn"
+                onClick={() => setIsEditing(true)}
+              >
+                Edit Name
+              </button>
+            )}
+          </div>
+        </div>
+
+        <h2 className="sr-only">Accounts</h2>
+        
+        <section className="accounts">
+          {/* ... بطاقات الحسابات ... */}
+           <div className="account-card">
           <div>
             <h3>Argent Bank Checking (x3448)</h3>
             <p className="amount">$48,098.43</p>
@@ -72,7 +112,12 @@ export default function Profile() {
           </div>
           <button className="arrow-btn">{">"}</button>
         </div>
-      </section>
-    </div>
+        </section>
+      </main>
+      
+      <Footer />
+    </>
   );
 }
+
+export default Profile;

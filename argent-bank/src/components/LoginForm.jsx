@@ -12,7 +12,7 @@ function LoginForm() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { token, loading, error } = useSelector((state) => state.auth)
+  const { token, loading, error, user } = useSelector((state) => state.auth)
 
   const handleSubmit = (e) => {
     e.preventDefault()

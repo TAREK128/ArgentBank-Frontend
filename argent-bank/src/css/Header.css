@@ -1,0 +1,68 @@
+/* src/components/Header/Header.css */
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-nav-logo {
+  display: flex;
+  align-items: center;
+}
+
+.main-nav-logo-image {
+  max-width: 100%;
+  width: 200px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.main-nav-item {
+  font-weight: bold;
+  color: #2c3e50;
+  text-decoration: none;
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.main-nav-item:hover {
+  text-decoration: underline;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+}
+
+.main-nav-item i {
+  font-size: 1.2rem;
+  color: #00bc77;
+}
+.log_out {
+    display: flex
+;
+    gap: 20px;
+}
+a.main-nav-item {
+    font-weight: normal;
+}
