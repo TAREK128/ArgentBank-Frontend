@@ -3,7 +3,7 @@ import { logout } from "../redux/features/authSlice"
 import { useNavigate } from "react-router-dom"
 
 function LogoutButton() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() // مسح بيانات Redux توكن ويوير
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -11,7 +11,7 @@ function LogoutButton() {
     dispatch(logout())
 
     // 2️⃣ مسح البيانات من localStorage
-    localStorage.removeItem("token")
+    localStorage.removeItem("token") // حتى لو عمل Refresh ما يلقى بيانات قديمة
     localStorage.removeItem("user")
 
     // 3️⃣ إعادة توجيه المستخدم للصفحة الرئيسية أو صفحة تسجيل الدخول

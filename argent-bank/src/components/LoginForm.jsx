@@ -1,9 +1,8 @@
 // src/components/LoginForm.jsx
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser, getUserProfile } from "../redux/features/authSlice";
+import { loginUser, getUserProfile } from "../redux/features/authSlice"; // من الـ authSlice للتعامل مع API.
 import '../css/LoginForm.css'
-
 import { useNavigate } from 'react-router-dom'
 
 function LoginForm() {
@@ -15,7 +14,7 @@ function LoginForm() {
   const { token, loading, error, user } = useSelector((state) => state.auth)
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault() // يُمنع إعادة تحميل الصفحة
     dispatch(loginUser({ email, password }))
   }
 // حالة المستخدم مسجل دخول او لا

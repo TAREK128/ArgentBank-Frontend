@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"
 import { updateUserProfile } from "../redux/features/authSlice";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -16,19 +17,23 @@ const [isEditing, setIsEditing] = useState(false);
 
   const handleSave = async () => {
     try {
-      await dispatch(updateUserProfile({ firstName, lastName, token })).unwrap();
-      setIsEditing(false);
+      await dispatch(updateUserProfile({ firstName, lastName, token })).unwrap(); // هنا يرسل طلب تحديث البروفايل
+      setIsEditing(false); // نجاح 
       alert("تم تحديث البيانات بنجاح!");
     } catch (error) {
       alert(`فشل التحديث: ${error}`);
     }
   };
 
- const handleCancel = () => {
+ const handleCancel = () => { // الغاء التعديل
   setFirstName(user?.firstName || ""); // ⬅️ إعادة firstName
   setLastName(user?.lastName || "");   // ⬅️ إعادة lastName
   setIsEditing(false);
 };
+
+const navigate = useNavigate();
+
+
 return (
     <>
       <Header />
@@ -92,7 +97,12 @@ return (
             <p className="amount">$48,098.43</p>
             <p className="balance">Available balance</p>
           </div>
-          <button className="arrow-btn">{">"}</button>
+          <button 
+  className="arrow-btn" 
+  onClick={() => navigate("/transactions")}
+>
+  {">"}
+</button>
         </div>
 
         <div className="account-card">
@@ -101,7 +111,12 @@ return (
             <p className="amount">$48,098.43</p>
             <p className="balance">Available balance</p>
           </div>
-          <button className="arrow-btn">{">"}</button>
+          <button 
+  className="arrow-btn" 
+  onClick={() => navigate("/transactions")}
+>
+  {">"}
+</button>
         </div>
 
         <div className="account-card">
@@ -110,7 +125,12 @@ return (
             <p className="amount">$48,098.43</p>
             <p className="balance">Available balance</p>
           </div>
-          <button className="arrow-btn">{">"}</button>
+          <button 
+  className="arrow-btn" 
+  onClick={() => navigate("/transactions")}
+>
+  {">"}
+</button>
         </div>
         </section>
       </main>

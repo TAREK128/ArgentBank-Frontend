@@ -42,21 +42,21 @@ export const getUserProfile = createAsyncThunk(
   }
 )
 
-// تغير الاسم 
+// تعديل البروفايل
 export const updateUserProfile = createAsyncThunk(
   'auth/updateProfile',
-  async ({ firstName, lastName, token }, thunkAPI) => { // ⬅️ غير إلى firstName و lastName
+  async ({ firstName, lastName, token }, thunkAPI) => { // 
     try {
       const response = await axios.put(
         `${API_URL}/profile`,
-        { firstName, lastName }, // ⬅️ أرسل firstName و lastName فقط
+        { firstName, lastName }, // 
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      return response.data.body;
+      return response.data.body; // إذا نجح → نُعيد البيانات بعد التعديل
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
@@ -68,15 +68,15 @@ const authSlice = createSlice({ //  هذا يُنشئ "شريحة" جديدة
   name: 'auth', // اسم الشريحه
   initialState: { //  نُحدد "الحالة الأولية" (initial state) للمصادقة
 
-    token: null, // رمز المص ادقة للمستخدم
-    user: null,
-    loading: false,
-    error: null,
+    token: null, // رمز الدخول
+    user: null, // بيانات المستخدم
+    loading: false, // حالة التحميل
+    error: null, // اي خطاء يظهر
   },
 
   // 🔹 هذه دوال لتحديث الحالة يدويًا، وليس عبر API
   reducers: {
-    logout: (state) => {
+    logout: (state) => { // تمسح بيانات المستخدم المسجل للدخول
       state.token = null
       state.user = null
     },
